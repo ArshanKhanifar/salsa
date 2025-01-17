@@ -1,4 +1,4 @@
-.PHONY: build run build-parallel install-parallel
+.PHONY: build run build-parallel install-parallel publish
 
 define select_project
 	if [ -z "$(project)" ]; then \
@@ -48,6 +48,18 @@ build-parallel-all:
 	cargo zigbuild --release --target x86_64-unknown-linux-gnu -p parallel
 	@cp target/x86_64-unknown-linux-gnu/release/parallel dist/parallel-amd64
 
+# Create a new release tag and push it
+publish:
+	@echo "Creating release tag..."
+	$(eval COMMIT_HASH := $(shell git rev-parse --short HEAD))
+	$(eval VERSION := v0.1.0-$(COMMIT_HASH))
+	@echo "Tagging as $(VERSION)..."
+	@git tag -a $(VERSION) -m "Release $(VERSION)"
+	@echo "Pushing tag..."
+	@git push origin $(VERSION)
+	@echo "Release $(VERSION) has been tagged and pushed."
+	@echo "GitHub Actions will now build and publish the release."
+
 # Help command
 help:
 	@echo "Available commands:"
@@ -56,5 +68,6 @@ help:
 	@echo "  make build-parallel       - Build parallel binary for current architecture"
 	@echo "  make install-parallel     - Install parallel binary to /usr/local/bin"
 	@echo "  make build-parallel-all   - Build parallel binary for both arm64 and amd64"
+	@echo "  make publish             - Create and push a new release tag"
 	@echo "\nAvailable projects:"
 	@ls crates
