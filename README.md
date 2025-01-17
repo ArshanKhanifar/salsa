@@ -6,7 +6,7 @@ This is a Rust monorepo containing shared libraries and CLI tools.
 
 Install the `parallel` tool with a single command:
 ```bash
-curl -L https://raw.githubusercontent.com/arshankhanifar/salsa/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/arshankhanifar/salsa/main/install.sh | bash
 ```
 
 This will automatically detect your system architecture and install the appropriate binary.

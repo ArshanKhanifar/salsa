@@ -21,10 +21,10 @@ esac
 TMP_DIR=$(mktemp -d)
 cd $TMP_DIR
 
-echo "Downloading parallel binary for $ARCH..."
-curl -L -o parallel "https://github.com/arshankhanifar/salsa/releases/latest/download/$BINARY"
+echo "ℹ️ Downloading parallel binary for $ARCH..."
+curl -sL -o parallel "https://github.com/arshankhanifar/salsa/releases/latest/download/$BINARY"
 
-echo "Installing parallel..."
+echo "ℹ️ Installing parallel..."
 chmod +x parallel
 if [ "$(id -u)" -eq 0 ]; then
     mv parallel /usr/local/bin/parallel
@@ -32,8 +32,8 @@ else
     sudo mv parallel /usr/local/bin/parallel
 fi
 
-echo "Cleaning up..."
+echo "👾 Cleaning up..."
 cd - > /dev/null
 rm -rf $TMP_DIR
 
-echo "Installation complete! Try running: parallel --help"
+echo "🎉Installation complete! Try running: parallel --help"
