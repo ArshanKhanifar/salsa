@@ -26,7 +26,11 @@ curl -L -o parallel "https://github.com/arshankhanifar/salsa/releases/latest/dow
 
 echo "Installing parallel..."
 chmod +x parallel
-sudo mv parallel /usr/local/bin/parallel
+if [ "$(id -u)" -eq 0 ]; then
+    mv parallel /usr/local/bin/parallel
+else
+    sudo mv parallel /usr/local/bin/parallel
+fi
 
 echo "Cleaning up..."
 cd - > /dev/null
