@@ -35,7 +35,7 @@ struct CommandHandle {
 
 async fn run_command_with_arg(cmd: &str, arg: &str, index: usize, any_failed: Arc<AtomicBool>) -> Result<CommandHandle> {
     let wrapped_cmd = format!(
-        r#"bash -c 'source ~/.bashrc; {} {}' -- {}"#,
+        r#"bash -c 'source ~/.bashrc 2> /dev/null; {} {}' -- {}"#,
         cmd, 
         arg,
         arg
@@ -43,7 +43,7 @@ async fn run_command_with_arg(cmd: &str, arg: &str, index: usize, any_failed: Ar
     
     // Get the first word of the command as the name
     let cmd_name = cmd.split_whitespace().next().unwrap_or(cmd);
-    let full_cmd = format!("{} {}", cmd, arg);
+    let full_cmd = format!("{}", cmd);
     
     let child = Command::new("bash")
         .arg("-c")

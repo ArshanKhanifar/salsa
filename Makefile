@@ -1,4 +1,4 @@
-.PHONY: build run build-parallel install-parallel publish
+.PHONY: build run build-parallel install-parallel publish publish-binaries
 
 define select_project
 	if [ -z "$(project)" ]; then \
@@ -60,6 +60,17 @@ publish:
 	@echo "Release $(VERSION) has been tagged and pushed."
 	@echo "GitHub Actions will now build and publish the release."
 
+# Build and publish binaries for the current platform
+publish-binaries:
+	@echo "Building binary for current platform..."
+	@make build-parallel
+	$(eval COMMIT_HASH := $(shell git rev-parse --short HEAD))
+	$(eval VERSION := v0.1.0-$(COMMIT_HASH))
+	$(eval ARCH := $(shell uname -m))
+	@echo "Publishing binary for $(ARCH) to release $(VERSION)..."
+	@gh release upload $(VERSION) dist/parallel-$(ARCH) --clobber
+	@echo "Binary published successfully!"
+
 # Help command
 help:
 	@echo "Available commands:"
@@ -69,5 +80,6 @@ help:
 	@echo "  make install-parallel     - Install parallel binary to /usr/local/bin"
 	@echo "  make build-parallel-all   - Build parallel binary for both arm64 and amd64"
 	@echo "  make publish             - Create and push a new release tag"
+	@echo "  make publish-binaries    - Build and publish binary for current platform"
 	@echo "\nAvailable projects:"
 	@ls crates
