@@ -1,0 +1,40 @@
+# Rust specific
+/target/
+**/*.rs.bk
+*.pdb
+
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Debug files
+*.dSYM/
+
+# Environment files
+.env
+.env.local
+
+# Build artifacts
+Cargo.lock
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Test coverage
+coverage/
+*.profraw
+
+# Backup files
+*~
+*.bak
+
+# Local development
+notes.md
+TODO.md
+
+dist

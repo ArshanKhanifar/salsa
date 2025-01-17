@@ -1,0 +1,13 @@
+[workspace]
+members = [
+    "crates/common",
+    "crates/cli",
+    "crates/parallel"
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = []
+repository = "https://github.com/yourusername/salsa"
+license = "MIT"
